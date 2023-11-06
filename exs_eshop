@@ -1,0 +1,42 @@
+-- EXS ESHOP
+
+-- 2.a Consultar todos os produtos existentes na loja
+SELECT * FROM product;
+
+-- 2.b Consultar os nomes de todos os usuarios
+SELECT name FROM users;
+
+-- 2.c Consultar as lojas que vendem produtos
+SELECT name FROM store;
+
+-- 2.d Consultar os endereços relacionados aos clientes
+SELECT 
+	name,
+    province,
+    city,
+    streetAddr,
+    postalcode
+FROM address;
+
+-- 2.e Consultar todos os produtos do tipo laptop;
+SELECT * FROM product WHERE type = 'laptop';
+
+-- 2.f Consultar o endereço, hora de inicio (start time) e hora final (end time) dos pontos de serviço da mesma cidade que o usuário cujo ID é 5
+SELECT * FROM address;
+SELECT
+	streetAdr,
+    startTime,
+    endTime
+FROM servicePoint
+WHERE city = 'Quebec City';
+
+-- 2.g Consultar a quantidade total de produtos que foram colocados no carrinho (shopping cart),considerando a loja com ID (sid) igual a 8.
+SELECT SUM(quantity) FROM save_to_shopping_cart
+WHERE fk_pid IN (
+    SELECT pk_pid
+    FROM product
+    WHERE fk_sid = 8
+);
+
+-- 2.h Consultar os comentários do produto 123456789.
+SELECT * FROM comments WHERE fk_pid = 123456789;
