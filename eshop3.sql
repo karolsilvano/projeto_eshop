@@ -1,5 +1,5 @@
-CREATE DATABASE Eshop;
-USE Eshop;
+CREATE DATABASE eshop;
+USE eshop;
 
 CREATE TABLE users(
 	pk_userId 	INT NOT NULL UNIQUE AUTO_INCREMENT,
@@ -68,7 +68,6 @@ CREATE TABLE brand(
     PRIMARY KEY (pk_brandName)
 );
 
--- (pk_pid, fk_sid, fk_brandName, name, type, modelNumber, color, amount, price)
 CREATE TABLE product(
 	pk_pid 			INT NOT NULL,
     fk_sid 			INT NOT NULL,
@@ -98,11 +97,12 @@ CREATE TABLE orderItem(
 CREATE TABLE orders(
 	pk_orderNumber 	INT NOT NULL,
 	paymentStatus 	ENUM('Paid', 'Unpaid'),
-    creationTime 	time NOT NULL,
+    creationTime    date NOT NULL,
     totalAmount 	DECIMAL(10,2),
     
     PRIMARY KEY(pk_orderNumber)
 );
+
 
 CREATE TABLE address(
 	pk_addrId 			INT NOT NULL,
@@ -157,7 +157,7 @@ CREATE TABLE contain(
     fk_itemId 		INT NOT NULL,
     quantity 		INT,
     
-    PRIMARY KEY (fk_orderNumber, fk_itemId),
+    PRIMARY KEY (fk_orderNumber),
     foreign key(fk_orderNumber) references orders(pk_orderNumber),
     foreign key(fk_itemId) references orderItem(pk_itemId)
 );
@@ -178,7 +178,7 @@ CREATE TABLE deliver_to(
 	timeDelivered 	date,
     
     PRIMARY KEY(fk_addrId, fk_orderNumber),
-    foreign key(fk_addrId) references adress(pk_addrId),
+    foreign key(fk_addrId) references address(pk_addrId),
     foreign key(fk_orderNumber) references orders(pk_orderNumber)
 );
 
@@ -200,6 +200,3 @@ CREATE TABLE after_sales_service_at(
     foreign key(fk_brandName) references brand(pk_brandName),
     foreign key(fk_spid) references servicePoint(pk_spid)
 );
-
--- SET FOREIGN_KEY_CHECKS = 0;
--- SET FOREIGN_KEY_CHECKS = 1;
